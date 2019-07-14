@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'DRInputLimitManager_Example' do
+  pod 'DRInputLimitManager', :path => '../'
+
+  target 'DRInputLimitManager_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
