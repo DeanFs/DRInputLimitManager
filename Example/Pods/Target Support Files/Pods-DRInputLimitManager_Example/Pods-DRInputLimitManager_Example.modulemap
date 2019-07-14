@@ -1,0 +1,6 @@
+framework module Pods_DRInputLimitManager_Example {
+  umbrella header "Pods-DRInputLimitManager_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

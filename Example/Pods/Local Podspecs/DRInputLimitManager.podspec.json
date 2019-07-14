@@ -1,0 +1,30 @@
+{
+  "name": "DRInputLimitManager",
+  "version": "0.1.0",
+  "summary": "A short description of DRInputLimitManager.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Dean_F/DRInputLimitManager",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Dean_F": "stone.feng1990@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/Dean_F/DRInputLimitManager.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "DRInputLimitManager/Classes/**/*",
+  "dependencies": {
+    "BlocksKit": [
+
+    ],
+    "DRMacroDefines": [
+
+    ]
+  }
+}

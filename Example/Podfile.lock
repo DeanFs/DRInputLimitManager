@@ -1,0 +1,41 @@
+PODS:
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - DRInputLimitManager (0.1.0):
+    - BlocksKit
+    - DRMacroDefines
+  - DRMacroDefines (0.1.0)
+
+DEPENDENCIES:
+  - DRInputLimitManager (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - BlocksKit
+    - DRMacroDefines
+
+EXTERNAL SOURCES:
+  DRInputLimitManager:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
+  DRInputLimitManager: c64b66ff7e7e69a406c2fa46d4f99172d5a3cc42
+  DRMacroDefines: b42c82f55db6d146e4f60c4309a7c8f6969577e6
+
+PODFILE CHECKSUM: 6769827b3a37ed6abc00eaca7bfac11f5885c06c
+
+COCOAPODS: 1.7.0.rc.1
