@@ -1,9 +1,9 @@
 {
   "name": "DRInputLimitManager",
   "version": "0.1.0",
-  "summary": "A short description of DRInputLimitManager.",
+  "summary": "一句话添加对满足UITextInput协议的输入框做文字限制，字数限制，输入内容限制等",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Dean_F/DRInputLimitManager",
+  "homepage": "https://github.com/DeanFs/DRInputLimitManager",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,7 +12,7 @@
     "Dean_F": "stone.feng1990@gmail.com"
   },
   "source": {
-    "git": "https://github.com/Dean_F/DRInputLimitManager.git",
+    "git": "https://github.com/DeanFs/DRInputLimitManager.git",
     "tag": "0.1.0"
   },
   "platforms": {
