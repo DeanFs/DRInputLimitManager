@@ -1,9 +1,12 @@
 use_frameworks!
 
-platform :ios, '8.0'
+platform :ios, '9.0'
 
 target 'DRInputLimitManager_Example' do
   pod 'DRInputLimitManager', :path => '../'
+  pod 'DRCategories'
+  pod 'IQKeyboardManager'
+  pod 'DRToastView'
 
   target 'DRInputLimitManager_Tests' do
     inherit! :search_paths

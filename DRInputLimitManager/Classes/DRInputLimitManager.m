@@ -6,8 +6,8 @@
 //
 
 #import "DRInputLimitManager.h"
-#import <DRMacroDefines/DRMacroDefines.h>
 #import <BlocksKit/BlocksKit.h>
+#import <DRMacroDefines/DRMacroDefines.h>
 
 #define kAssociatedKey @selector(addTextLimitForInputView:limit:textDidChangeNotice:)
 
@@ -19,15 +19,15 @@
 @property (nonatomic, assign) BOOL forbidSpaceChar;
 @property (nonatomic, assign) BOOL forBidSpaceCharStart;
 @property (nonatomic, assign) DRInputCharTypes charTypes;
-@property (nonatomic, copy) DRInputLimitBlock beyondLimitBlock;
 @property (nonatomic, copy) DRInputLimitBlock checkDoneBlock;
 
 // control params
-@property (nonatomic, copy) NSString *baseText;
-@property (nonatomic, copy) NSString *oldText;
-@property (nonatomic, copy) NSString *tempText;
+@property (nonatomic, copy) NSString *baseText; // 当前处理的文本原始值
+@property (nonatomic, copy) NSString *oldText;  // 保存输入框最新的变更
+@property (nonatomic, copy) NSString *tempText; // 当前文本处理过程值
 @property (nonatomic, assign) NSInteger location; // 光标位置
 @property (nonatomic, assign) BOOL busy;
+@property (nonatomic, assign) BOOL beyond;
 
 @end
 
@@ -40,20 +40,17 @@
  @param inputView 需要限制字数的输入框
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行校验完成后调用
  */
 + (void)addTextLimitForInputView:(UIView<UITextInput> *)inputView
              textDidChangeNotice:(NSString *)textDidChange
                            limit:(NSInteger)limit
-                beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                   checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
     [self addTextLimitForInputView:inputView
                textDidChangeNotice:textDidChange
                              limit:limit
                    forbidSpaceChar:NO
               forbidSpaceCharStart:NO
-                  beyondLimitBlock:beyondLimitBlock
                     checkDoneBlock:checkDoneBlock];
 }
 
@@ -63,20 +60,17 @@
  @param inputView 需要限制字数的输入框
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行校验完成后调用
  */
 + (void)addTextLimitForbidStartWithSpaceCharForInputView:(UIView<UITextInput> *)inputView
                                      textDidChangeNotice:(NSString *)textDidChange
                                                    limit:(NSInteger)limit
-                                        beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                                           checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
     [self addTextLimitForInputView:inputView
                textDidChangeNotice:textDidChange
                              limit:limit
                    forbidSpaceChar:NO
               forbidSpaceCharStart:YES
-                  beyondLimitBlock:beyondLimitBlock
                     checkDoneBlock:checkDoneBlock];
 }
 
@@ -86,20 +80,17 @@
  @param inputView 需要限制字数的输入框
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行完校验后调用
  */
 + (void)addTextLimitForbidSpaceCharForInputView:(UIView<UITextInput> *)inputView
                             textDidChangeNotice:(NSString *)textDidChange
                                           limit:(NSInteger)limit
-                               beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                                  checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
     [self addTextLimitForInputView:inputView
                textDidChangeNotice:textDidChange
                              limit:limit
                    forbidSpaceChar:YES
               forbidSpaceCharStart:NO
-                  beyondLimitBlock:beyondLimitBlock
                     checkDoneBlock:checkDoneBlock];
 }
 
@@ -110,21 +101,18 @@
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
  @param charTypes 允许输入的字符类型
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行校验完成后调用
  */
 + (void)addTextLimitForInputView:(UIView<UITextInput> *)inputView
              textDidChangeNotice:(NSString *)textDidChange
                            limit:(NSInteger)limit
                 allowedCharTypes:(DRInputCharTypes)charTypes
-                beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                   checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
     DRInputLimitManager *manager = [self addTextLimitForInputView:inputView
                                               textDidChangeNotice:textDidChange
                                                             limit:limit
                                                   forbidSpaceChar:NO
                                              forbidSpaceCharStart:NO
-                                                 beyondLimitBlock:beyondLimitBlock
                                                    checkDoneBlock:checkDoneBlock];
     manager.charTypes = charTypes;
 }
@@ -137,16 +125,14 @@
  @param limit 限制字数
  @param forbidSpaceChar YES:不允许输入空白字符(" ", "\n", "\r")
  @param forbidSpaceCharStart YES:不允许在第一个字符位置输入空白字符(" ", "\n", "\r")
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行完校验后调用
  */
 + (instancetype)addTextLimitForInputView:(UIView<UITextInput> *)inputView
-             textDidChangeNotice:(NSString *)textDidChange
-                           limit:(NSInteger)limit
-                 forbidSpaceChar:(BOOL)forbidSpaceChar
-            forbidSpaceCharStart:(BOOL)forbidSpaceCharStart
-                beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
-                  checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
+                     textDidChangeNotice:(NSString *)textDidChange
+                                   limit:(NSInteger)limit
+                         forbidSpaceChar:(BOOL)forbidSpaceChar
+                    forbidSpaceCharStart:(BOOL)forbidSpaceCharStart
+                          checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
     DRInputLimitManager *manager = [inputView bk_associatedValueForKey:_cmd];
     if (!manager) {
         manager = [[DRInputLimitManager alloc] initWithInputView:inputView
@@ -156,9 +142,19 @@
     manager.limit = limit;
     manager.forbidSpaceChar = forbidSpaceChar;
     manager.forBidSpaceCharStart = forbidSpaceCharStart;
-    manager.beyondLimitBlock = beyondLimitBlock;
     manager.checkDoneBlock = checkDoneBlock;
     return manager;
+}
+
+/**
+ 如果输入框字符长度超过限制长度，则会调用该方法
+ 该方法为虚函数，在子类中实现
+ 用处：如做统一的toast提示文字超限，其他一些设置等
+ 
+ @param limit 用户设置的文本最大长度
+ */
+- (void)whenTextBeyondLimit:(NSInteger)limit {
+    
 }
 
 #pragma mark - life cycle
@@ -181,6 +177,7 @@
 }
 
 #pragma mark - private
+// 文本调整入口，监听到文本变更
 - (void)onTextDidChange:(NSNotification *)notice {
     dispatch_async(dispatch_get_main_queue(), ^{
         if ([self isPreinput]) {
@@ -208,25 +205,31 @@
     }
 }
 
+// 开始检测修正文本
 - (void)check {
-    if (self.tempText.length == 0) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self replaceWithText:@""];
-        });
-        if (self.oldText.length > 0) {
-            [self doCheckAction];
-            return;
-        }
-        self.busy = NO;
+    kDRWeakSelf
+    if (self.tempText.length == 0) { // 文本为空
         dispatch_async(dispatch_get_main_queue(), ^{
-            kDR_SAFE_BLOCK(self.checkDoneBlock, self.inputView, self.tempText);
+            kDR_SAFE_BLOCK(self.checkDoneBlock, self, self.inputView, self.tempText, self.limit, NO);
+            self.busy = NO;
         });
         return;
     }
-    [self removeSpaceCharStart];
-    [self removeSpaceChars];
-    [self checkAllowedCharTypes];
-    [self checkLimit];
+    [self removeSpaceCharStart]; // 去除开头的空白字符
+    [self removeSpaceChars];     // 去除所有空白字符
+    [self checkAllowedCharTypes];// 仅留下允许输入的空格字符
+    [self checkLimit];           // 做字符长度限制
+    
+    if (![self.oldText isEqualToString:self.baseText]) {
+        // 在处理检测期间，输入框内容又有变更
+        [self doCheckAction];
+        return;
+    }
+    
+    // 检测变更完成
+    [self replaceTextComplete:^{
+        weakSelf.busy = NO;
+    }];
 }
 
 // 移除开头的空白字符
@@ -249,9 +252,7 @@
                     self.location -= spaceRange.length;
                 }
                 [text replaceCharactersInRange:spaceRange withString:@""];
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self replaceWithText:text];
-                });
+                self.tempText = text;
             }
         }
     }
@@ -280,9 +281,7 @@
                                     options:0
                                       range:NSMakeRange(0, text.length)
                                withTemplate:@""];
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self replaceWithText:text];
-                });
+                self.tempText = text;
             }
         }
     }
@@ -319,18 +318,17 @@
             for (NSTextCheckingResult *result in matchs) {
                 [text appendString:[self.tempText substringWithRange:result.range]];
             }
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                if (text.length != self.tempText.length) {
-                    self.location = text.length;
-                }
-                [self replaceWithText:text];
-            });
+            if (text.length != self.tempText.length) {
+                self.location = text.length;
+            }
+            self.tempText = text;
         }
     }
 }
 
 // 字符长度限制
 - (void)checkLimit {
+    self.beyond = NO;
     if (self.limit >= 0) {
         if (self.tempText.length > 0) {
             NSMutableArray *wholeChars = [NSMutableArray array];
@@ -368,34 +366,33 @@
                         [text appendString:subText];
                     }
                 }
-                dispatch_sync(dispatch_get_main_queue(), ^{
-                    [self replaceWithText:text];
-                    kDR_SAFE_BLOCK(self.beyondLimitBlock, self.inputView, text);
-                });
-                if (![self.oldText isEqualToString:self.baseText]) {
-                    [self doCheckAction];
-                    return;
-                }
+                self.beyond = YES;
+                self.tempText = text;
             }
         }
     }
-    self.busy = NO;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        kDR_SAFE_BLOCK(self.checkDoneBlock, self.inputView, self.tempText);
-    });
 }
 
-- (void)replaceWithText:(NSString *)text {
-    self.tempText = text;
-    // 避免死循环，先移除监听
-    kDR_REMOVE_OBSERVER_NOTICE_OBJ(self.textDidChangeNoticeName, self.inputView)
-    [self.inputView replaceRange:[self wholeRange] withText:text];
-    self.inputView.selectedTextRange = [self newSelectedRange];
-    if ([self.inputView respondsToSelector:@selector(scrollRangeToVisible:)]) {
-        [(UITextView *)self.inputView scrollRangeToVisible:NSMakeRange(self.location, 0)];
-    }
-    // 文本修改后，恢复监听
-    kDR_ADD_OBSERVER_OBJ(self.textDidChangeNoticeName, @selector(onTextDidChange:), self.inputView)
+- (void)replaceTextComplete:(dispatch_block_t)complete {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.tempText isEqualToString:self.oldText]) {
+            // 处理结果与输入框内容无差异
+            kDR_SAFE_BLOCK(self.checkDoneBlock, self, self.inputView, self.tempText, self.limit, self.beyond);
+            kDR_SAFE_BLOCK(complete);
+            return;
+        }
+        // 避免死循环，先移除监听
+        kDR_REMOVE_OBSERVER_NOTICE_OBJ(self.textDidChangeNoticeName, self.inputView)
+        [self.inputView replaceRange:[self wholeRange] withText:self.tempText];
+        self.inputView.selectedTextRange = [self newSelectedRange];
+        if ([self.inputView respondsToSelector:@selector(scrollRangeToVisible:)]) {
+            [(UITextView *)self.inputView scrollRangeToVisible:NSMakeRange(self.location, 0)];
+        }
+        kDR_SAFE_BLOCK(self.checkDoneBlock, self, self.inputView, self.tempText, self.limit, self.beyond);
+        // 文本修改后，恢复监听
+        kDR_ADD_OBSERVER_OBJ(self.textDidChangeNoticeName, @selector(onTextDidChange:), self.inputView)
+        kDR_SAFE_BLOCK(complete);
+    });
 }
 
 // 新的光标位置

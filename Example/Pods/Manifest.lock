@@ -14,18 +14,51 @@ PODS:
   - BlocksKit/UIKit (2.2.5):
     - BlocksKit/Core
     - BlocksKit/DynamicDelegate
-  - DRInputLimitManager (0.1.0):
+  - DRCategories (0.1.1):
+    - DRMacroDefines
+    - DRSandboxManager
+    - pop
+  - DRInputLimitManager (0.1.1):
     - BlocksKit
     - DRMacroDefines
-  - DRMacroDefines (0.1.0)
+  - DRMacroDefines (0.1.2)
+  - DRSandboxManager (0.1.0)
+  - DRToastView (0.1.0):
+    - DRMacroDefines
+    - JXExtension
+  - IQKeyboardManager (6.4.0)
+  - JXExtension (0.4.0):
+    - JXExtension/Category (= 0.4.0)
+    - JXExtension/Transition (= 0.4.0)
+    - JXExtension/View (= 0.4.0)
+    - SDVersion
+  - JXExtension/Category (0.4.0):
+    - SDVersion
+  - JXExtension/Transition (0.4.0):
+    - SDVersion
+  - JXExtension/View (0.4.0):
+    - JXExtension/Category
+    - SDVersion
+  - pop (1.0.12)
+  - SDVersion (4.3.2)
 
 DEPENDENCIES:
+  - DRCategories
   - DRInputLimitManager (from `../`)
+  - DRToastView
+  - IQKeyboardManager
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BlocksKit
+    - DRCategories
     - DRMacroDefines
+    - DRSandboxManager
+    - DRToastView
+    - IQKeyboardManager
+    - JXExtension
+    - pop
+    - SDVersion
 
 EXTERNAL SOURCES:
   DRInputLimitManager:
@@ -33,9 +66,16 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
-  DRInputLimitManager: eb8195c0494e964ff5c18b78bf4af2ed6488be0c
-  DRMacroDefines: b42c82f55db6d146e4f60c4309a7c8f6969577e6
+  DRCategories: 0d8d3733c118b9ebed9bdedbf89410f0472cbdd3
+  DRInputLimitManager: e4577af55680188e170dcd722228179610c81a75
+  DRMacroDefines: 58aa271bc1c4170fa09f4f33dcad18fc4f21a57e
+  DRSandboxManager: 2a48ca41b22edfc39dd2f66abd5a99e777410c61
+  DRToastView: f0019801a709f53071c59ba9d33286b1fbdd99e0
+  IQKeyboardManager: fcef267266379c003181fc3592f6bdb8bf4db839
+  JXExtension: c625f6881ae43cb7bbf97d49c0b2202f8f1de898
+  pop: d582054913807fd11fd50bfe6a539d91c7e1a55a
+  SDVersion: 18f32c835c1543611fcfae3c6accd9a04b90597e
 
-PODFILE CHECKSUM: 6769827b3a37ed6abc00eaca7bfac11f5885c06c
+PODFILE CHECKSUM: 8d78b30e4c70dc57a2ade21dd92edcb3178b137d
 
-COCOAPODS: 1.7.0.rc.1
+COCOAPODS: 1.6.1

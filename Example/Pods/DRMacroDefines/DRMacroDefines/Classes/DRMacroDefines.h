@@ -28,7 +28,7 @@
 
 // 安全执行block
 #define kDR_SAFE_BLOCK(block, ...) \
-    if(block){block(__VA_ARGS__);}
+    ({ !block ? nil : block(__VA_ARGS__); })
 
 // post 消息
 #define kDR_POST_NOTIFICATION(name, obj) \

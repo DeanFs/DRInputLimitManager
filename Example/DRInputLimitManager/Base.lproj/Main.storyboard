@@ -1,31 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="whP-gf-Uak">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="X9O-do-JO5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="wQg-tq-qST">
+        <scene sceneID="d16-SQ-mrM">
             <objects>
-                <viewController id="whP-gf-Uak" customClass="DRViewController" sceneMemberID="viewController">
+                <viewController id="X9O-do-JO5" customClass="DRViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uEw-UM-LJ8"/>
-                        <viewControllerLayoutGuide type="bottom" id="Mvr-aV-6Um"/>
+                        <viewControllerLayoutGuide type="top" id="q7a-KY-ffy"/>
+                        <viewControllerLayoutGuide type="bottom" id="xVN-fY-CQI"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="TpU-gO-2f1">
+                    <view key="view" contentMode="scaleToFill" id="ebn-yp-Nh2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="限制输入10字" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fz9-eU-H6v">
+                                <rect key="frame" x="36" y="70" width="303" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="JiF-fn-xRI"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uv9-qw-guh" customClass="IQTextView">
+                                <rect key="frame" x="36" y="155" width="303" height="100"/>
+                                <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Oja-Xi-ZZa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="placeholderTextColor">
+                                        <color key="value" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="限制输入40字"/>
+                                </userDefinedRuntimeAttributes>
+                            </textView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="限制输入手机号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fO5-03-zes">
+                                <rect key="frame" x="36" y="305" width="303" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="Vwo-bB-JTv"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="fO5-03-zes" firstAttribute="leading" secondItem="ebn-yp-Nh2" secondAttribute="leadingMargin" constant="20" id="2AF-tL-2DE"/>
+                            <constraint firstItem="Fz9-eU-H6v" firstAttribute="leading" secondItem="ebn-yp-Nh2" secondAttribute="leadingMargin" constant="20" id="9ui-Cw-YIy"/>
+                            <constraint firstItem="Fz9-eU-H6v" firstAttribute="top" secondItem="q7a-KY-ffy" secondAttribute="bottom" constant="50" id="OBz-Fs-odZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fO5-03-zes" secondAttribute="trailing" constant="20" id="PUw-aw-YxL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fz9-eU-H6v" secondAttribute="trailing" constant="20" id="blr-Yt-5i7"/>
+                            <constraint firstItem="fO5-03-zes" firstAttribute="top" secondItem="uv9-qw-guh" secondAttribute="bottom" constant="50" id="c5g-DZ-OD5"/>
+                            <constraint firstItem="uv9-qw-guh" firstAttribute="top" secondItem="Fz9-eU-H6v" secondAttribute="bottom" constant="50" id="dqF-d8-mbd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uv9-qw-guh" secondAttribute="trailing" constant="20" id="j0v-qu-fcB"/>
+                            <constraint firstItem="uv9-qw-guh" firstAttribute="leading" secondItem="ebn-yp-Nh2" secondAttribute="leadingMargin" constant="20" id="pjj-G3-wSq"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="phoneTextField" destination="fO5-03-zes" id="Ycs-CE-SKO"/>
+                        <outlet property="textField" destination="Fz9-eU-H6v" id="mMf-AL-023"/>
+                        <outlet property="textView" destination="uv9-qw-guh" id="KqX-mu-oRt"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tc2-Qw-aMS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lJ2-W0-zzT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="305" y="433"/>
+            <point key="canvasLocation" x="-725" y="1081"/>
         </scene>
     </scenes>
 </document>

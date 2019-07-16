@@ -7,7 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DRInputLimitBlock) (UIView<UITextInput> *inputView, NSString *text);
+@class DRInputLimitManager;
+typedef void (^DRInputLimitBlock) (DRInputLimitManager *manager,
+                                   UIView<UITextInput> *inputView,
+                                   NSString *text,
+                                   NSInteger limit,
+                                   BOOL beyondLimit);
 
 typedef NS_ENUM(NSInteger, DRInputCharTypes) {
     DRInputCharTypesSpace = 1 << 0,      // 空格回车等空白字符
@@ -26,13 +31,11 @@ typedef NS_ENUM(NSInteger, DRInputCharTypes) {
  @param inputView 需要限制字数的输入框
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行校验完成后调用
  */
 + (void)addTextLimitForInputView:(UIView<UITextInput> *)inputView
              textDidChangeNotice:(NSString *)textDidChange
                            limit:(NSInteger)limit
-                beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                   checkDoneBlock:(DRInputLimitBlock)checkDoneBlock;
 
 /**
@@ -41,13 +44,11 @@ typedef NS_ENUM(NSInteger, DRInputCharTypes) {
  @param inputView 需要限制字数的输入框
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行校验完成后调用
  */
 + (void)addTextLimitForbidStartWithSpaceCharForInputView:(UIView<UITextInput> *)inputView
                                      textDidChangeNotice:(NSString *)textDidChange
                                                    limit:(NSInteger)limit
-                                        beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                                           checkDoneBlock:(DRInputLimitBlock)checkDoneBlock;
 
 /**
@@ -56,13 +57,11 @@ typedef NS_ENUM(NSInteger, DRInputCharTypes) {
  @param inputView 需要限制字数的输入框
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行完校验后调用
  */
 + (void)addTextLimitForbidSpaceCharForInputView:(UIView<UITextInput> *)inputView
                             textDidChangeNotice:(NSString *)textDidChange
                                           limit:(NSInteger)limit
-                               beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                                  checkDoneBlock:(DRInputLimitBlock)checkDoneBlock;
 
 /**
@@ -72,14 +71,21 @@ typedef NS_ENUM(NSInteger, DRInputCharTypes) {
  @param textDidChange 输入内容变更消息名称，如: UITextFieldTextDidChangeNotification
  @param limit 限制字数
  @param charTypes 允许输入的字符类型
- @param beyondLimitBlock 当文字长度超过上限时调用该回调
  @param checkDoneBlock 每次监听到输入框变更，进行校验完成后调用
  */
 + (void)addTextLimitForInputView:(UIView<UITextInput> *)inputView
              textDidChangeNotice:(NSString *)textDidChange
                            limit:(NSInteger)limit
                 allowedCharTypes:(DRInputCharTypes)charTypes
-                beyondLimitBlock:(DRInputLimitBlock)beyondLimitBlock
                   checkDoneBlock:(DRInputLimitBlock)checkDoneBlock;
+
+/**
+ 如果输入框字符长度超过限制长度，则会调用该方法
+ 该方法为虚函数，在子类中实现
+ 用处：如做统一的toast提示文字超限，其他一些设置等
+
+ @param limit 用户设置的文本最大长度
+ */
+- (void)whenTextBeyondLimit:(NSInteger)limit;
 
 @end
