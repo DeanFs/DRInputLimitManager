@@ -389,6 +389,9 @@
             [(UITextView *)self.inputView scrollRangeToVisible:NSMakeRange(self.location, 0)];
         }
         kDR_SAFE_BLOCK(self.checkDoneBlock, self, self.inputView, self.tempText, self.limit, self.beyond);
+        if (self.beyond) {
+            [self whenTextBeyondLimit:self.limit];
+        }
         // 文本修改后，恢复监听
         kDR_ADD_OBSERVER_OBJ(self.textDidChangeNoticeName, @selector(onTextDidChange:), self.inputView)
         kDR_SAFE_BLOCK(complete);
