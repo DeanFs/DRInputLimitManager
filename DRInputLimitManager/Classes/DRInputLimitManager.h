@@ -85,7 +85,9 @@ typedef NS_ENUM(NSInteger, DRInputCharTypes) {
  用处：如做统一的toast提示文字超限，其他一些设置等
 
  @param limit 用户设置的文本最大长度
+ @param inputView 当前输入框
  */
-- (void)whenTextBeyondLimit:(NSInteger)limit;
+- (void)whenTextBeyondLimit:(NSInteger)limit
+                  inputView:(UIView<UITextInput> *)inputView;
 
 @end

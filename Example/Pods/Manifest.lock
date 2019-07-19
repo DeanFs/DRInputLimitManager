@@ -18,7 +18,7 @@ PODS:
     - DRMacroDefines
     - DRSandboxManager
     - pop
-  - DRInputLimitManager (0.1.1):
+  - DRInputLimitManager (0.1.2):
     - BlocksKit
     - DRMacroDefines
   - DRMacroDefines (0.1.2)
@@ -67,7 +67,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   DRCategories: 0d8d3733c118b9ebed9bdedbf89410f0472cbdd3
-  DRInputLimitManager: e4577af55680188e170dcd722228179610c81a75
+  DRInputLimitManager: d772bea9f917e54f493bfa622d549426a32e38d5
   DRMacroDefines: 58aa271bc1c4170fa09f4f33dcad18fc4f21a57e
   DRSandboxManager: 2a48ca41b22edfc39dd2f66abd5a99e777410c61
   DRToastView: f0019801a709f53071c59ba9d33286b1fbdd99e0
