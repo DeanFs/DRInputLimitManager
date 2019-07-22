@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DRInputLimitManager'
-  s.version          = '0.1.2'
+  s.version          = '0.1.3'
   s.summary          = '一句话添加对满足UITextInput协议的输入框做文字限制，字数限制，输入内容限制等'
 
 # This description is used to generate tags and improve search results.

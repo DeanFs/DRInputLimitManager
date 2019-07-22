@@ -135,7 +135,7 @@
                           checkDoneBlock:(DRInputLimitBlock)checkDoneBlock {
     DRInputLimitManager *manager = [inputView bk_associatedValueForKey:_cmd];
     if (!manager) {
-        manager = [[DRInputLimitManager alloc] initWithInputView:inputView
+        manager = [[[self class] alloc] initWithInputView:inputView
                                                       noticeName:textDidChange];
         [inputView bk_associateValue:manager withKey:_cmd];
     }
